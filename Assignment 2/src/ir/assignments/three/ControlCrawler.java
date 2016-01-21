@@ -12,6 +12,8 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
+import java.io.File;
+
 public class ControlCrawler {
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
@@ -38,6 +40,14 @@ public class ControlCrawler {
 
         config.setCrawlStorageFolder(crawlStorageFolder);
 
+        File folder = new File("pages");
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                throw new Exception("couldn't create the storage folder: " + folder.getAbsolutePath() + " does it already exist ?");
+            } else {
+                System.out.println("Created folder: " + folder.getAbsolutePath());
+            }
+        }
     /*
      * Be polite: Make sure that we don't send more than 1 request per
      * second (1000 milliseconds between requests).
@@ -55,6 +65,9 @@ public class ControlCrawler {
      * is -1 for unlimited number of pages
      */
         config.setMaxPagesToFetch(1000);
+
+
+        config.setUserAgentString("UCI Inf141-CS121 crawler 34363846 47508988 76382638 47911659");
 
         /**
          * Do you want crawler4j to crawl also binary data ?
