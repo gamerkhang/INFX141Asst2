@@ -1,5 +1,8 @@
 package ir.assignments.three;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -59,18 +62,37 @@ public class Crawler extends WebCrawler {
 		String anchor = page.getWebURL().getAnchor();
 
 		System.out.println("Docid: " + docid);
-		System.out.println("URL: " + url);
+		System.out.println("URL: " + url);/*
 		System.out.println("Domain: " + domain);
 		System.out.println("Sub-domain: " + subDomain);
 		System.out.println("Path: " + path);
 		System.out.println("Parent page: " + parentUrl);
 		System.out.println("Anchor text: " + anchor);
-
+*/
 		if (page.getParseData() instanceof HtmlParseData) {
 			HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
 			String text = htmlParseData.getText();
 			String html = htmlParseData.getHtml();
 			Set<WebURL> links = htmlParseData.getOutgoingUrls();
+
+			try {
+				//http://stackoverflow.com/questions/4499562/how-to-save-the-data-into-file-in-java
+				FileWriter fOut = new FileWriter("pages/" + docid + ".txt");
+				BufferedWriter writer = new BufferedWriter(fOut);
+				writer.write(text);
+				writer.close();
+
+				fOut = new FileWriter("Subdomains.txt", true);
+				writer = new BufferedWriter(fOut);
+				writer.write(subDomain);
+				writer.write("\n");
+				writer.close();
+			}
+			catch(IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+
 
 			System.out.println("Text length: " + text.length());
 			System.out.println("Html length: " + html.length());

@@ -421,7 +421,7 @@ public class CrawlConfig {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("Crawl storage folder: " + getCrawlStorageFolder() + "\n");
+    sb.append("Crawl storage folder: " + 0getCrawlStorageFolder() + "\n");
     sb.append("Resumable crawling: " + isResumableCrawling() + "\n");
     sb.append("Max depth of crawl: " + getMaxDepthOfCrawling() + "\n");
     sb.append("Max pages to fetch: " + getMaxPagesToFetch() + "\n");
