@@ -3,8 +3,11 @@ package ir.assignments.three;
 /**
  * Created by VGDC_1 on 1/18/2016.
  *
+ * Derek Edrich, Khang Tran, Carl Pacheco, Brett Lenz
+ *
  * Example used: https://github.com/yasserg/crawler4j/tree/master/src/test/java/edu/uci/ics/crawler4j/examples/basic
  */
+
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -12,9 +15,17 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class ControlCrawler {
+    static HashMap<String, Integer> subDomainMap;
+
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
             System.out.println("Needed parameters: ");
@@ -41,13 +52,23 @@ public class ControlCrawler {
         config.setCrawlStorageFolder(crawlStorageFolder);
 
         File folder = new File("pages");
-        if (!folder.exists()) {
+        if (folder.exists()) {
+            String[] files = folder.list();
+            for (String file: files)
+            {
+                File currentFile = new File(folder.getPath(),file);
+                currentFile.delete();
+            }
+        }
+        else {
             if (!folder.mkdirs()) {
                 throw new Exception("couldn't create the storage folder: " + folder.getAbsolutePath() + " does it already exist ?");
             } else {
                 System.out.println("Created folder: " + folder.getAbsolutePath());
             }
         }
+
+        subDomainMap = new HashMap<String, Integer>();
     /*
      * Be polite: Make sure that we don't send more than 1 request per
      * second (1000 milliseconds between requests).
@@ -58,7 +79,7 @@ public class ControlCrawler {
      * You can set the maximum crawl depth here. The default value is -1 for
      * unlimited depth
      */
-        config.setMaxDepthOfCrawling(2);
+        config.setMaxDepthOfCrawling(0);
 
     /*
      * You can set the maximum number of pages to crawl. The default value
@@ -104,5 +125,25 @@ public class ControlCrawler {
      * will reach the line after this only when crawling is finished.
      */
         controller.start(Crawler.class, numberOfCrawlers);
+
+        //TODO Print hashmap of subdomains to file
+        List<String> sortedSubDomains  = new ArrayList<String>(subDomainMap.keySet());
+
+        sortedSubDomains.sort((String a, String b) -> {
+            return a.compareTo(b);
+        });
+
+        File subDomains = new File("subdomains.txt");
+
+        if (subDomains.exists())
+            subDomains.delete();
+
+        FileWriter fOut = new FileWriter("subdomains.txt");
+
+        for (String subDomain: sortedSubDomains)
+        {
+            fOut.write(subDomain + ", " + subDomainMap.get(subDomain) + "\n");
+        }
+        fOut.close();
     }
 }

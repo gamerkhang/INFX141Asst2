@@ -13,7 +13,13 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 import java.util.Collection;
-
+/**
+ * Created by VGDC_1 on 1/18/2016.
+ *
+ * Derek Edrich, Khang Tran, Carl Pacheco, Brett Lenz
+ *
+ * Example used: https://github.com/yasserg/crawler4j/tree/master/src/test/java/edu/uci/ics/crawler4j/examples/basic
+ */
 public class Crawler extends WebCrawler {
 	/**
 	 * This method is for testing purposes only. It does not need to be used
@@ -23,11 +29,11 @@ public class Crawler extends WebCrawler {
 	 * This methods performs a crawl starting at the specified seed URL. Returns a
 	 * collection containing all URLs visited during the crawl.
 	 */
-	public static Collection<String> crawl(String seedURL) {
-		// TODO find where to set user agent name
-
-		return null;
-	}
+//	public static Collection<String> crawl(String seedURL) {
+//		// TODO find where to set user agent name
+//
+//		return null;
+//	}
 
 	private static final Pattern IMAGE_EXTENSIONS = Pattern.compile(".*\\.(bmp|gif|jpg|png)$");
 
@@ -82,11 +88,10 @@ public class Crawler extends WebCrawler {
 				writer.write(text);
 				writer.close();
 
-				fOut = new FileWriter("Subdomains.txt", true);
-				writer = new BufferedWriter(fOut);
-				writer.write(subDomain);
-				writer.write("\n");
-				writer.close();
+				if (ControlCrawler.subDomainMap.containsKey(subDomain))
+					ControlCrawler.subDomainMap.put(subDomain, ControlCrawler.subDomainMap.get(subDomain)+1);
+				else
+					ControlCrawler.subDomainMap.put(subDomain, 1);
 			}
 			catch(IOException e)
 			{
