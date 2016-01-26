@@ -27,6 +27,8 @@ public class ControlCrawler {
     static HashMap<String, Integer> subDomainMap;
 
     public static void main(String[] args) throws Exception {
+
+        long start = System.currentTimeMillis();
         if (args.length != 2) {
             System.out.println("Needed parameters: ");
             System.out.println("\t rootFolder (it will contain intermediate crawl data)");
@@ -79,7 +81,7 @@ public class ControlCrawler {
      * You can set the maximum crawl depth here. The default value is -1 for
      * unlimited depth
      */
-        config.setMaxDepthOfCrawling(0);
+        config.setMaxDepthOfCrawling(-1);
 
     /*
      * You can set the maximum number of pages to crawl. The default value
@@ -126,7 +128,7 @@ public class ControlCrawler {
      */
         controller.start(Crawler.class, numberOfCrawlers);
 
-        //TODO Print hashmap of subdomains to file
+        //Writes subdomains to text files
         List<String> sortedSubDomains  = new ArrayList<String>(subDomainMap.keySet());
 
         sortedSubDomains.sort((String a, String b) -> {
@@ -145,5 +147,42 @@ public class ControlCrawler {
             fOut.write(subDomain + ", " + subDomainMap.get(subDomain) + "\n");
         }
         fOut.close();
+
+        // Processing sub domains - word counts
+
+        List<String> word = new ArrayList<>();
+
+        String[] files = folder.list();
+        for (String file: files)
+        {
+            List<String> words = Utilities.tokenizeFile(new File("pages/"+ file));
+            word.addAll(words);
+        }
+        //TODO Filter based on stopwords
+        List<Frequency> frequencies = WordFrequencyCounter.computeWordFrequencies(word);
+
+        frequencies.sort((Frequency a, Frequency b) -> {
+            if (Integer.compare(b.getFrequency(),a.getFrequency())== 0)
+            {
+                return a.getText().compareTo(b.getText());
+            }
+            else
+                return Integer.compare(b.getFrequency(),a.getFrequency());
+        });
+
+        File commonWords = new File("CommonWords.txt");
+        FileWriter cwOut = new FileWriter("CommonWords.txt");
+
+        if (commonWords.exists())
+            commonWords.delete();
+
+//        for (int i = 0; i < 1; i++)
+//            cwOut.write(frequencies.get(i).getText() + " " + frequencies.get(i).getFrequency());
+
+        System.out.println(frequencies);
+
+        cwOut.close();
+
+        System.out.println("Runtime: " + (System.currentTimeMillis()-start) + "ms");
     }
 }
