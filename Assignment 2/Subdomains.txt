@@ -1,1 +1,4 @@
-www.ics, 1
+calendar.ics, 1
+intranet.ics, 1
+www.ics, 53
+www.informatics, 1
