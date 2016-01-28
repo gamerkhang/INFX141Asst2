@@ -84,7 +84,7 @@ public class ControlCrawler {
      * You can set the maximum number of pages to crawl. The default value
      * is -1 for unlimited number of pages
      */
-        config.setMaxPagesToFetch(1000);
+        config.setMaxPagesToFetch(-1);
 
 
         config.setUserAgentString("UCI Inf141-CS121 crawler 34363846 47508988 76382638 47911659");
