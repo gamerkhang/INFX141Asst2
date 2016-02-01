@@ -30,12 +30,12 @@ public class Crawler extends WebCrawler {
 	 * collection containing all URLs visited during the crawl.
 	 */
 //	public static Collection<String> crawl(String seedURL) {
-//		// TODO find where to set user agent name
+//
 //
 //		return null;
 //	}
 
-	private static final Pattern IMAGE_EXTENSIONS = Pattern.compile(".*\\.(bmp|gif|jpg|png)$");
+	private static final Pattern FILTERS = Pattern.compile(".*\\.(bmp|gif|png|xls|xlsx|css|js|bmp|jpe?g|tiff?|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|pdf|rm|smil|wmv|swf|wma|zip|rar|gz)$");
 
 	/**
 	 * You should implement this function to specify whether the given url
@@ -45,13 +45,13 @@ public class Crawler extends WebCrawler {
 	public boolean shouldVisit(Page referringPage, WebURL url) {
 		String href = url.getURL().toLowerCase();
 		// Ignore the url if it has an extension that matches our defined set of image extensions.
-		if (IMAGE_EXTENSIONS.matcher(href).matches()) {
+		if (FILTERS.matcher(href).matches()) {
 			return false;
 		}
 
 		// Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
 		//		return href.startsWith("http://www.ics.uci.edu/");
-		return href.contains(".ics.uci.edu/");
+		return !href.contains("calendar.ics.uci.edu/calendar.php") && href.contains(".ics.uci.edu/");
 	}
 
 	/**

@@ -95,7 +95,7 @@ public class ControlCrawler {
          */
         config.setIncludeBinaryContentInCrawling(false);
 
-    /*   //TODO See if you want to use resumable crawling
+    /*
      * This config parameter can be used to set your crawl to be resumable
      * (meaning that you can resume the crawl from a previously
      * interrupted/crashed crawl). Note: if you enable resuming feature and
@@ -173,7 +173,7 @@ public class ControlCrawler {
 
         word.removeAll(stopWords);
 
-        //TODO Filter based on stopwords
+        //done Filter based on stopwords
         List<Frequency> frequencies = WordFrequencyCounter.computeWordFrequencies(word);
 
         frequencies.sort((Frequency a, Frequency b) -> {
