@@ -8,12 +8,14 @@ package ir.assignments.three;
  * Example used: https://github.com/yasserg/crawler4j/tree/master/src/test/java/edu/uci/ics/crawler4j/examples/basic
  */
 
-
+import com.sleepycat.je.txn.LockerFactory;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +23,7 @@ import java.io.FileWriter;
 import java.util.*;
 
 public class ControlCrawler {
+    private static Logger logger = LoggerFactory.getLogger(ControlCrawler.class);
     static HashMap<String, Integer> subDomainMap;
 
     public static void main(String[] args) throws Exception {
@@ -49,6 +52,7 @@ public class ControlCrawler {
         CrawlConfig config = new CrawlConfig();
 
         config.setCrawlStorageFolder(crawlStorageFolder);
+        config.setFollowRedirects(false);
 
         File folder = new File("pages");
         if (folder.exists()) {

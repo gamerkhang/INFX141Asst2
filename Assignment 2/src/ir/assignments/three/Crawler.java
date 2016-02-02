@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import org.apache.http.Header;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
