@@ -83,7 +83,7 @@ public class ControlCrawler {
      * You can set the maximum crawl depth here. The default value is -1 for
      * unlimited depth
      */
-        config.setMaxDepthOfCrawling(0);
+        config.setMaxDepthOfCrawling(-1);
 
     /*
      * You can set the maximum number of pages to crawl. The default value
@@ -183,7 +183,7 @@ public class ControlCrawler {
         }
 
         System.out.println("Longest file (by word count): " + files[maxIndex] + ' ' + maxWordCount);
-        answersOut.write("Longest file (by word count): " + files[maxIndex] + ' with ' + maxWordCount + " words\n");
+        answersOut.write("Longest file (by word count): " + files[maxIndex] + " with " + maxWordCount + " words\n");
         answersOut.close();
 
         word.removeAll(stopWords);
