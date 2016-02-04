@@ -37,7 +37,7 @@ public class Crawler extends WebCrawler {
 //		return null;
 //	}
 
-	private static final Pattern FILTERS = Pattern.compile(".*\\.(bmp|gif|png|xls|xlsx|css|js|bmp|jpe?g|tiff?|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|pdf|rm|smil|wmv|swf|wma|zip|rar|gz)$");
+	private static final Pattern FILTERS = Pattern.compile(".*\\.(bmp|gif|png|xls|xlsx|ppt|pptx|ps|css|js|bmp|jpe?g|tiff?|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|pdf|rm|smil|wmv|swf|wma|zip|rar|gz)$");
 
 	/**
 	 * You should implement this function to specify whether the given url
@@ -53,7 +53,7 @@ public class Crawler extends WebCrawler {
 
 		// Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
 		//		return href.startsWith("http://www.ics.uci.edu/");
-		return !href.contains("calendar.ics.uci.edu/calendar.php") && href.contains(".ics.uci.edu/");
+		return !href.contains("calendar.ics.uci.edu/calendar.php") && href.contains(".ics.uci.edu/") && !href.contains("duttgroup.ics.uci.edu");
 	}
 
 	/**

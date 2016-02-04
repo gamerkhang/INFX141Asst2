@@ -25,6 +25,7 @@ import java.util.*;
 public class ControlCrawler {
     private static Logger logger = LoggerFactory.getLogger(ControlCrawler.class);
     static HashMap<String, Integer> subDomainMap;
+    private static int maxPagesToCrawl = 50000;
 
     public static void main(String[] args) throws Exception {
 
@@ -76,7 +77,7 @@ public class ControlCrawler {
      * Be polite: Make sure that we don't send more than 1 request per
      * second (1000 milliseconds between requests).
      */
-        config.setPolitenessDelay(1000);
+        config.setPolitenessDelay(1200);
 
     /*
      * You can set the maximum crawl depth here. The default value is -1 for
@@ -88,7 +89,7 @@ public class ControlCrawler {
      * You can set the maximum number of pages to crawl. The default value
      * is -1 for unlimited number of pages
      */
-        config.setMaxPagesToFetch(-1);
+        config.setMaxPagesToFetch(maxPagesToCrawl);
 
 
         config.setUserAgentString("UCI Inf141-CS121 crawler 34363846 47508988 76382638 47911659");
@@ -130,6 +131,14 @@ public class ControlCrawler {
         controller.start(Crawler.class, numberOfCrawlers);
 
         System.out.println("Runtime: " + (System.currentTimeMillis()-start) + "ms");
+        File answersFile = new File("answers.txt");
+        FileWriter answersOut = new FileWriter("answers.txt");
+
+        if (answersFile.exists())
+            answersFile.delete();
+        answersOut.write("Runtime: " + (System.currentTimeMillis()-start) + "ms\n");
+        int pageCount = new File("pages\\").list().length;
+        answersOut.write("Number of pages crawled: " + pageCount);
 
         //Writes subdomains to text files
         List<String> sortedSubDomains  = new ArrayList<String>(subDomainMap.keySet());
@@ -173,7 +182,8 @@ public class ControlCrawler {
             }
         }
 
-        System.out.println("Largest file: " + files[maxIndex] + ' ' + maxWordCount);
+        System.out.println("Longest file (by word count): " + files[maxIndex] + ' ' + maxWordCount);
+        answersOut.write("Longest file (by word count): " + files[maxIndex] + ' ' + maxWordCount);
 
         word.removeAll(stopWords);
 
@@ -197,8 +207,8 @@ public class ControlCrawler {
             
         // Check to make to sure this is correct cause I added this through the github website
 
-//        for (int i = 0; i < 1; i++)
-//            cwOut.write(frequencies.get(i).getText() + " " + frequencies.get(i).getFrequency());
+        for (int i = 0; i < (frequencies.size() < 500 ? frequencies.size() : 500); i++)
+            cwOut.write(frequencies.get(i).getText() + " " + frequencies.get(i).getFrequency() + "\n");
 
         System.out.println(frequencies);
 
