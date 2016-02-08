@@ -25,7 +25,7 @@ import java.util.*;
 public class ControlCrawler {
     private static Logger logger = LoggerFactory.getLogger(ControlCrawler.class);
     static HashMap<String, Integer> subDomainMap;
-    private static int maxPagesToCrawl = 50000;
+    private static int maxPagesToCrawl = 40000;
 
     public static void main(String[] args) throws Exception {
 
@@ -77,7 +77,7 @@ public class ControlCrawler {
      * Be polite: Make sure that we don't send more than 1 request per
      * second (1000 milliseconds between requests).
      */
-        config.setPolitenessDelay(1200);
+        config.setPolitenessDelay(2000);
 
     /*
      * You can set the maximum crawl depth here. The default value is -1 for

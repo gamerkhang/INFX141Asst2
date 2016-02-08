@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="INFX141Crawler">
+    <output-path>$PROJECT_DIR$/out/artifacts/INFX141Crawler</output-path>
+    <root id="archive" name="INFX141Crawler.jar">
+      <element id="module-output" name="Assignment 2" />
+      <element id="library" level="project" name="crawler4j-4.1-jar-with-dependencies" />
+      <element id="library" level="project" name="slf4j-simple-1.7.14" />
+    </root>
+  </artifact>
+</component>

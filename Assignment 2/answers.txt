@@ -1,3 +1,8 @@
-Runtime: 44299ms
-Number of pages crawled: 1
-Longest file (by word count): 1.txt 309
+Brett Lenz 76382638
+Carl Pacheco 47911659
+Derek Edrich 34363846
+Khang Tran 47508988
+
+Runtime: 89296084ms
+Number of pages crawled: 33353
+Longest file (by word count): 7991.txt with 22026300 words
